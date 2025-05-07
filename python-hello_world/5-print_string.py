@@ -1,3 +1,3 @@
 #!/usr/bin/python3
-str = "Holberthon School"
-print(str*3)
+str = "Holberton School"
+print(f"{str*3}\nHolberton")
