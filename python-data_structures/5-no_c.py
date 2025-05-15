@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
 def no_c(my_string):
-    characters = "'cC'"
+    characters = {'c', 'C'}
     my_string= "".join(x for x in my_string if x not in characters)
-    print(my_string)
+    return (my_string)
