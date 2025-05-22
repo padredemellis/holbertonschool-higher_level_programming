@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Module to divide all elements of a matrix by a divisor."""
 def matrix_divided(matrix, div):
     """Divide all elements of a matrix by a divisor and return a new matrix.
 
