@@ -27,4 +27,4 @@ TypeError: last_name must be a string
 
 Prueba 5: Ambos nombres vacíos
 >>> say_my_name("", "")
-My name is  
+My name is
