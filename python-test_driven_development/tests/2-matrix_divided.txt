@@ -1,0 +1,52 @@
+Ejemplos de prueba para matrix_divided
+
+>>> matrix_divided = __import__('2-matrix_divided').matrix_divided
+
+Prueba 1: Matriz válida y divisor válido
+>>> matrix = [[1, 2, 3], [4, 5, 6]]
+>>> matrix_divided(matrix, 3)
+[[0.33, 0.67, 1.0], [1.33, 1.67, 2.0]]
+
+Prueba 2: Matriz no es lista de listas
+>>> matrix = [1, 2, 3]
+>>> matrix_divided(matrix, 3)
+Traceback (most recent call last):
+TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+Prueba 3: Elemento de matriz no es entero/flotante
+>>> matrix = [[1, 2, "3"], [4, 5, 6]]
+>>> matrix_divided(matrix, 3)
+Traceback (most recent call last):
+TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+Prueba 4: Filas de diferente tamaño
+>>> matrix = [[1, 2], [3, 4, 5]]
+>>> matrix_divided(matrix, 2)
+Traceback (most recent call last):
+TypeError: Each row of the matrix must have the same size
+
+Prueba 5: Divisor no es número
+>>> matrix = [[1, 2], [3, 4]]
+>>> matrix_divided(matrix, "2")
+Traceback (most recent call last):
+TypeError: div must be a number
+
+Prueba 6: Divisor es cero
+>>> matrix_divided(matrix, 0)
+Traceback (most recent call last):
+ZeroDivisionError: division by zero
+
+Prueba 7: Redondeo a dos decimales
+>>> matrix = [[1.111, 2.222], [3.333, 4.444]]
+>>> matrix_divided(matrix, 1)
+[[1.11, 2.22], [3.33, 4.44]]
+
+Prueba 8: Divisor negativo
+>>> matrix = [[10, 20], [30, 40]]
+>>> matrix_divided(matrix, -2)
+[[-5.0, -10.0], [-15.0, -20.0]]
+
+Prueba 9: Matriz vacía (caso límite)
+>>> matrix = []
+>>> matrix_divided(matrix, 5)
+[]
