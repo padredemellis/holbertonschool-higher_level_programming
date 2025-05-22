@@ -1,0 +1,25 @@
+Ejemplos de prueba para say_my_name
+
+>>> say_my_name = __import__('3-say_my_name').say_my_name
+
+Prueba 1: Nombres válidos
+>>> say_my_name("John", "Smith")
+My name is John Smith
+
+Prueba 2: Apellido vacío por defecto
+>>> say_my_name("Bob")
+My name is Bob 
+
+Prueba 3: first_name no es string
+>>> say_my_name(12, "White")
+Traceback (most recent call last):
+TypeError: first_name must be a string
+
+Prueba 4: last_name no es string
+>>> say_my_name("Bob", 123)
+Traceback (most recent call last):
+TypeError: last_name must be a string
+
+Prueba 5: Ambos nombres vacíos
+>>> say_my_name("", "")
+My name is  
