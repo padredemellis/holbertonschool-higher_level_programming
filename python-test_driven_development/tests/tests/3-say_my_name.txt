@@ -1,5 +1,10 @@
-Ejemplos de prueba para say_my_name
+The ``3-say_my_name`` module
+==============================
 
+Using ``say_my_name``
+-----------------------
+
+Import the function:
 >>> say_my_name = __import__('3-say_my_name').say_my_name
 
 Prueba 1: Nombres válidos
