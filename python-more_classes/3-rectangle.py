@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """
-Defines a Rectangle class with string representation.
+Define un rectángulo con representación en cadena (str).
 """
 
 
 class Rectangle:
     """
-    Represents a rectangle with width, height, area, perimeter, and string representation.
+    Representa un rectángulo con atributos ancho (width) y alto (height).
     """
 
     def __init__(self, width=0, height=0):
@@ -52,6 +52,3 @@ class Rectangle:
         for _ in range(self.__height):
             rect.append("#" * self.__width)
         return "\n".join(rect)
-
-    def __repr__(self):
-        return f"Rectangle({self.__width}, {self.__height})"
