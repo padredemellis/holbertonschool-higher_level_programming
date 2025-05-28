@@ -1,33 +1,94 @@
-"""
-Test cases for 7-base_geometry.py
->>> import importlib
->>> BaseGeometry = importlib.import_module('7-base_geometry').BaseGeometry
+Probando la clase BaseGeometry y sus métodos.
+>>> module = __import__('7-base_geometry')
+>>> BaseGeometry = module.BaseGeometry
+
+
+Probando la instanciación de BaseGeometry:
 >>> bg = BaseGeometry()
+>>> isinstance(bg, BaseGeometry)
+True
 
->>> bg.area()
-Traceback (most recent call last):
-...
-Exception: area() is not implemented
+---
 
->>> bg.integer_validator("age", 10)
+# --- Pruebas para integer_validator ---
 
->>> bg.integer_validator("age", 0)
-Traceback (most recent call last):
-...
-ValueError: age must be greater than 0
+Probando integer_validator con valores válidos:
+>>> bg.integer_validator("my_integer", 10) # No debería lanzar error
+>>> bg.integer_validator("valid_num", 1) # Mínimo válido
 
->>> bg.integer_validator("age", -5)
-Traceback (most recent call last):
-...
-ValueError: age must be greater than 0
+---
 
->>> bg.integer_validator("age", "10")
-Traceback (most recent call last):
-...
-TypeError: age must be an integer
+Probando integer_validator con tipos de datos inválidos:
 
->>> bg.integer_validator("age", True)
-Traceback (most recent call last):
-...
-TypeError: age must be an integer
-"""
+# Test present: integer_validator("age") - Esto lanzaría un TypeError de Python por falta de argumento
+# En un doctest, esto podría representarse así si quieres probarlo directamente:
+>>> try:
+...     bg.integer_validator("age")
+... except TypeError as e:
+...     print(e)
+integer_validator() missing 1 required positional argument: 'value'
+
+# Test present: integer_validator("age", "4") - Una cadena
+>>> try:
+...     bg.integer_validator("age", "4")
+... except TypeError as e:
+...     print(e)
+age must be an integer
+
+# Test present: integer_validator("age", (4,)) - Una tupla
+>>> try:
+...     bg.integer_validator("age", (4,))
+... except TypeError as e:
+...     print(e)
+age must be an integer
+
+# Test present: integer_validator("age", [3]) - Una lista
+>>> try:
+...     bg.integer_validator("age", [3])
+... except TypeError as e:
+...     print(e)
+age must be an integer
+
+# Test present: integer_validator("age", True) - Un booleano (True es 1, pero se espera TypeError por no ser int explícito)
+>>> try:
+...     bg.integer_validator("age", True)
+... except TypeError as e:
+...     print(e)
+age must be an integer
+
+# Test present: integer_validator("age", {3, 4}) - Un set
+>>> try:
+...     bg.integer_validator("age", {3, 4})
+... except TypeError as e:
+...     print(e)
+age must be an integer
+
+# Test present: integer_validator("age", None) - NoneType
+>>> try:
+...     bg.integer_validator("age", None)
+... except TypeError as e:
+...     print(e)
+age must be an integer
+
+---
+
+Probando integer_validator con valores menores o iguales a 0:
+>>> try:
+...     bg.integer_validator("height", 0)
+... except ValueError as e:
+...     print(e)
+height must be greater than 0
+>>> try:
+...     bg.integer_validator("size", -5)
+... except ValueError as e:
+...     print(e)
+size must be greater than 0
+
+---
+
+# --- Pruebas para area ---
+>>> try:
+...     bg.area()
+... except Exception as e:
+...     print(e)
+area() is not implemented
