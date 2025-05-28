@@ -1,0 +1,54 @@
+#!/usr/bin/env python3
+"""
+Test cases for BaseGeometry class (7-base_geometry.py)
+"""
+
+import unittest
+from 7-base_geometry import BaseGeometry
+
+class TestBaseGeometry(unittest.TestCase):
+    """Test suite for BaseGeometry class."""
+
+    def setUp(self):
+        """Set up test fixtures."""
+        self.bg = BaseGeometry()
+
+    def test_area_not_implemented(self):
+        """Test that area() raises Exception."""
+        with self.assertRaises(Exception) as cm:
+            self.bg.area()
+        self.assertEqual(str(cm.exception), "area() is not implemented")
+
+    def test_integer_validator_valid_input(self):
+        """Test integer_validator with valid input."""
+        try:
+            self.bg.integer_validator("valid", 10)
+        except Exception as e:
+            self.fail(f"integer_validator raised {type(e).__name__} unexpectedly!")
+
+    def test_integer_validator_non_integer(self):
+        """Test integer_validator with non-integer input."""
+        with self.assertRaises(TypeError) as cm:
+            self.bg.integer_validator("invalid", "not_an_integer")
+        self.assertEqual(str(cm.exception), "invalid must be an integer")
+
+        with self.assertRaises(TypeError) as cm:
+            self.bg.integer_validator("invalid_float", 3.14)
+        self.assertEqual(str(cm.exception), "invalid_float must be an integer")
+
+        with self.assertRaises(TypeError) as cm:
+            self.bg.integer_validator("invalid_bool", True)
+        self.assertEqual(str(cm.exception), "invalid_bool must be an integer")
+
+    def test_integer_validator_negative_or_zero(self):
+        """Test integer_validator with zero or negative integers."""
+        with self.assertRaises(ValueError) as cm:
+            self.bg.integer_validator("zero", 0)
+        self.assertEqual(str(cm.exception), "zero must be greater than 0")
+
+        with self.assertRaises(ValueError) as cm:
+            self.bg.integer_validator("negative", -5)
+        self.assertEqual(str(cm.exception), "negative must be greater than 0")
+
+if __name__ == "__main__":
+    unittest.main()
