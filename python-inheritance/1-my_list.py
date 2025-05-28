@@ -14,5 +14,4 @@ class MyList(list):
         Assumes all elements are of type int.
         Does not modify the original list.
         """
-
         print(sorted(self))
