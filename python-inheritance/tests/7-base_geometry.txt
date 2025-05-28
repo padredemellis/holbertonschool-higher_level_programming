@@ -1,6 +1,6 @@
 """
 Test cases for 7-base_geometry.py (Doctest format)
->>> from 7_base_geometry import BaseGeometry
+>>> from 7_base_geometry import BaseGeometry  # Nota: Usa guión bajo, no guión
 >>> bg = BaseGeometry()
 
 >>> bg.area()
