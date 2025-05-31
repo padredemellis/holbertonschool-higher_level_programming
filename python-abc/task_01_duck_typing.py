@@ -3,6 +3,7 @@
 Make an abstract method
 '''
 from abc import ABC, abstractmethod
+import math  # Importamos math para usar math.pi
 
 
 class Shape(ABC):
@@ -23,10 +24,10 @@ class Circle(Shape):
         self.radius = radius
 
     def area(self):
-        return 3.14 * self.radius ** 2
+        return math.pi * self.radius ** 2  # Usamos math.pi
 
     def perimeter(self):
-        return 2 * 3.14 * self.radius
+        return 2 * math.pi * self.radius  # Usamos math.pi
 
 
 class Rectangle(Shape):
