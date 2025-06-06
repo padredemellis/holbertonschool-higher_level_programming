@@ -5,7 +5,8 @@ representing the Pascal’s triangle of n:'''
 
 
 def pascal_triangle(n):
-    """Devuelve el Triángulo de Pascal de n filas como lista de listas de enteros."""
+    """Devuelve el Triángulo de Pascal de
+    n filas como lista de listas de enteros."""
     if n <= 0:
         return []
 
