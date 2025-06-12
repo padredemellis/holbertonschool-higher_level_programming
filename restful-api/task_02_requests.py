@@ -15,3 +15,6 @@ def fetch_and_print_posts():
             print(post['title'])
     else:
         print(f"Error en la peticion: {response.status_code}")
+
+def fetch_and_save_posts():
+    pass
