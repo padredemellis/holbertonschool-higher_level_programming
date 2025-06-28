@@ -1,5 +1,6 @@
---Crear tabla force_name
+-- 3-force_name.sql
+USE `$1`;
 CREATE TABLE IF NOT EXISTS force_name (
     id INT,
-    name VARCHAR(256) not null
+    name VARCHAR(256) NOT NULL
 );
