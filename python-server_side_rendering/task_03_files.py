@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from flask import Flask, render_template, request
 import json
 import csv
@@ -28,13 +29,11 @@ def read_csv_products(file_path):
     if not os.path.exists(file_path):
         logging.error(f"CSV file not found: {file_path}")
         return None
-    products = [] # ¡CORREGIDO AQUÍ!
+    products = []
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
-            # csv.DictReader lee cada fila como un diccionario usando los encabezados como claves
             reader = csv.DictReader(f)
             for row in reader:
-                # Convertir 'id' y 'price' a tipos numéricos
                 try:
                     row['id'] = int(row['id'])
                     row['price'] = float(row['price'])
@@ -65,13 +64,13 @@ def items():
     items_list = []
     json_file_path = 'items.json'
     if not os.path.exists(json_file_path):
-        return render_template('items.html', items=[], error_message="No se pudo cargar la lista de ítems.") # ¡CORREGIDO AQUÍ!
+        return render_template('items.html', items=[], error_message="No se pudo cargar la lista de ítems.")
     try:
         with open(json_file_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
             items_list = data.get('items', [])
     except json.JSONDecodeError as e:
-        return render_template('items.html', items=[], error_message=f"Error al decodificar JSON: {e}") # ¡CORREGIDO AQUÍ!
+        return render_template('items.html', items=[], error_message=f"Error al decodificar JSON: {e}")
     return render_template('items.html', items=items_list)
 
 @app.route('/products')
@@ -98,7 +97,8 @@ def products():
             product_id = int(product_id)
             filtered_products = [p for p in data if p.get('id') == product_id]
             if not filtered_products:
-                error_message = f"Product with ID {product_id} not found."
+                # CORRECCIÓN CLAVE: Mensaje que espera el test
+                error_message = "Product not found"
                 return render_template('product_display.html', error=error_message)
             data = filtered_products
         except ValueError:
