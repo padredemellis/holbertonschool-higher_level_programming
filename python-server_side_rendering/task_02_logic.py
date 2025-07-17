@@ -2,7 +2,7 @@
 from flask import Flask, render_template
 import json
 import os
-import logging  # Importación faltante
+import logging  # Importación esencial
 
 app = Flask(__name__)
 
@@ -20,28 +20,30 @@ def contact():
 
 @app.route('/items')
 def items():
-    json_file_path = 'items.json'
+    # Usar ruta absoluta para el JSON
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    json_file_path = os.path.join(base_dir, 'items.json')
     
     if not os.path.exists(json_file_path):
-        logging.error(f"Error: file {json_file_path} not found")
+        logging.error(f"File not found: {json_file_path}")
         return render_template('items.html', 
                                items=[], 
-                               error_message="The list of items could not be loaded.")
-    
+                               error_message="Items list unavailable")
+
     try:
         with open(json_file_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
-            items_list = data.get('items', [])  # Valor por defecto corregido
+            items_list = data.get('items', [])
     except json.JSONDecodeError as e:
-        logging.error(f"Error decoding JSON from {json_file_path}: {e}")
+        logging.error(f"JSON error: {e}")
         return render_template('items.html', 
                                items=[], 
-                               error_message="Error reading item data.")
+                               error_message="Invalid items data")
     except Exception as e:
-        logging.error(f"Unexpected error reading {json_file_path}: {e}")
+        logging.error(f"Unexpected error: {e}")
         return render_template('items.html', 
                                items=[], 
-                               error_message="Unexpected error loading items.")
+                               error_message="Loading error")
 
     return render_template('items.html', items=items_list)
 
