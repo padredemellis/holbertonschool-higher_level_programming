@@ -1,56 +1,37 @@
-#!/usr/bin/python
-import os
-import logging
-from string import Template
-
-logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
-
 def generate_invitations(template, attendees):
-    """
-    Genera archivos de invitación personalizados a partir de una plantilla
-    y una lista de asistentes, manejando varios casos de error.
-
-    Args:
-        template (str): La cadena de la plantilla con marcadores de posición.
-        attendees (list): Una lista de diccionarios, donde cada diccionario
-                          representa los datos de un asistente.
-    """
+    # Verificar tipos de entrada
     if not isinstance(template, str):
-        logging.error("Invalid Input Type: Template must be a string.")
+        print("Error: Invalid input types. 'template' must be a string.")
         return
-    if not isinstance(attendees, list):
-        logging.error("Invalid Input Type: Attendees must be a list of dictionaries.")
+    if not isinstance(attendees, list) or not all(isinstance(att, dict) for att in attendees):
+        print("Error: Invalid input types. 'attendees' must be a list of dictionaries.")
         return
-    for i, attendee in enumerate(attendees):
-        if not isinstance(attendee, dict):
-            logging.error(f"Invalid Input Type: Attendee at index {i} is not a dictionary.")
-            return
-
-    if not template:
-        logging.error("Template is empty, no output files generated.")
+    
+    # Verificar plantilla vacía
+    if not template.strip():
+        print("Template is empty, no output files generated.")
         return
+    
+    # Verificar lista vacía
     if not attendees:
-        logging.error("No data provided, no output files generated.")
+        print("No data provided, no output files generated.")
         return
-
-    placeholders = ["name", "event_title", "event_date", "event_location"]
-
-    for i, attendee_data in enumerate(attendees):
-        processed_data = attendee_data.copy()
-
-        for placeholder in placeholders:
-            if placeholder not in processed_data or processed_data[placeholder] is None:
-                processed_data[placeholder] = "N/A"
-
+    
+    # Procesar cada asistente
+    for idx, attendee in enumerate(attendees, start=1):
+        # Crear copia de la plantilla para modificar
+        invitation = template
+        
+        # Reemplazar cada placeholder o usar "N/A" si falta
+        for key in ['name', 'event_title', 'event_date', 'event_location']:
+            value = attendee.get(key)
+            placeholder = f"{{{key}}}"
+            invitation = invitation.replace(placeholder, str(value) if value is not None else "N/A")
+        
+        # Escribir archivo de salida
+        filename = f"output_{idx}.txt"
         try:
-            invitation_template = Template(template)
-            personalized_invitation = invitation_template.safe_substitute(processed_data)
-
-            output_filename = f"output_{i + 1}.txt"
-            with open(output_filename, 'w', encoding='utf-8') as f:
-                f.write(personalized_invitation)
-            logging.info(f"Generated {output_filename}")
-
-        except Exception as e:
-            logging.error(f"Error processing invitation for attendee {i + 1}: {e}")
-            continue
+            with open(filename, 'w') as file:
+                file.write(invitation)
+        except IOError as e:
+            print(f"Error writing file {filename}: {e}")
